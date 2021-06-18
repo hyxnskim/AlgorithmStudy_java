@@ -53,32 +53,22 @@ public class FindPrimeNumber {
         
         // 2-3. 해당 정수보다 작은 가장 큰 소수 찾기
         int maxPrime = 0;
-        while(max > 0) {
+        while(max > 1) {
         	if(isPrime(max)) {
         		maxPrime = max;
         		break;
         	}
         	max--;
         }
-        if(maxPrime < 2) {
-        	answer = 0;
-        	return answer;
-        }
+
         System.out.println("maxPrime = " + maxPrime);
         
         // 3. 2 ~ maxPrime 사이의 소수들 추출
-        ArrayList<Integer> primes = new ArrayList<Integer>();
         for(int i = 2; i <= maxPrime; i++) {
-        	if(isPrime(i)) primes.add(i);
+        	if(isPrime(i)) {
+        		if(isAble(i, nums)) answer++;
+        	}
         }
-        
-        System.out.println("--------------------------");
-        // 4. 숫자의 조합으로 해당 소수들을 만들 수 있는지 검사
-        for(int i = 0; i < primes.size(); i++) {
-        	if(isAble(primes.get(i), nums)) answer++;
-        }
-        System.out.println("--------------------------");
-        
         return answer;
     }
 	
