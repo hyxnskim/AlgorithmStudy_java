@@ -1,8 +1,7 @@
 package week2_search;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * <pre>
@@ -38,16 +37,16 @@ public class FindPrimeNumber {
         int answer = 0;
         
         // 1. 문자열을 각각의 숫자로 분리
-        Integer[] nums = stringToInt(numbers);
+        ArrayList<Integer> nums = stringToInt(numbers);
         
         // 2. 숫자의 조합으로 만들 수 있는 가장 큰 수보다 작은 가장 큰 소수 maxPrime을 찾는다.
         // 2-1. nums 내림차순 정렬
-        Arrays.sort(nums, Collections.reverseOrder());
+        nums.sort(Comparator.reverseOrder());
 
         // 2-2. 내림차순 정렬된 nums배열 하나의 정수로 만들기
         int max = 0;
-        for(int i = 0; i < nums.length; i++) {
-        	max = max * 10 + nums[i];
+        for(int i = 0; i < nums.size() ; i++) {
+        	max = max * 10 + nums.get(i);
         }
         System.out.println("max = " + max);
         
@@ -63,12 +62,17 @@ public class FindPrimeNumber {
 
         System.out.println("maxPrime = " + maxPrime);
         
+        System.out.println("-------------------");
         // 3. 2 ~ maxPrime 사이의 소수들 추출
         for(int i = 2; i <= maxPrime; i++) {
         	if(isPrime(i)) {
-        		if(isAble(i, nums)) answer++;
+        		if(isAble(i, nums)) {
+        			System.out.println(i);
+        			answer++;
+        		}
         	}
         }
+        System.out.println("-------------------");
         return answer;
     }
 	
@@ -77,10 +81,10 @@ public class FindPrimeNumber {
 	 * @param num 변환할 문자열
 	 * @return 변롼된 숫자 배열
 	 */
-	public static Integer[] stringToInt(String num) {
-		Integer[] arr = new Integer[num.length()];
+	public static ArrayList<Integer> stringToInt(String num) {
+		ArrayList<Integer> arr = new ArrayList<Integer>();
 		for(int i = 0; i < num.length(); i++) {
-        	arr[i] = (int)(num.charAt(i) - '0');
+        	arr.add((Integer)(num.charAt(i) - '0'));
         }
 		return arr;
 	}
@@ -92,7 +96,7 @@ public class FindPrimeNumber {
 	 */
 	public static boolean isPrime(int num) {
 		if(num < 2) return false;
-		for(int i = 2; i < num; i++) {
+		for(int i = 2; i < num/2 + 1; i++) {
 			if(num % i == 0) return false;
 		}
 		return true;
@@ -104,28 +108,21 @@ public class FindPrimeNumber {
 	 * @param numArr 조합할 숫자 배열
 	 * @return 조합 가능하면 true, 불가능하면 false
 	 */
-	public static boolean isAble(int prime, Integer[] numArr) {
-		Integer[] primeArr = stringToInt(Integer.toString(prime));
-		Arrays.sort(primeArr, Collections.reverseOrder());
+	public static boolean isAble(int prime, ArrayList<Integer> numArr) {
+		ArrayList<Integer> primeArr = stringToInt(Integer.toString(prime));
+		ArrayList<Integer> tmpArr = (ArrayList<Integer>) numArr.clone();
 		
-		int p = 0, n = 0;
-		while(p < primeArr.length && n < numArr.length) {
-			if(primeArr[p] > numArr[n]) {
+		if(!numArr.containsAll(primeArr)) return false;
+		
+		int tmp;
+		for(int i = 0; i < primeArr.size(); i++) {
+			tmp = primeArr.get(i);
+			if(tmpArr.contains(tmp)) {
+				tmpArr.remove((Object)tmp);
+			} else {
 				return false;
 			}
-			else if(primeArr[p] < numArr[n]) {
-				n++;
-			}
-			else if(primeArr[p] == numArr[n]) {
-				p++;
-				n++;
-			}
 		}
-		
-		if(p == primeArr.length) {
-			System.out.println(prime);
-			return true;
-		}
-		return false;
+		return true;
 	}
 }
