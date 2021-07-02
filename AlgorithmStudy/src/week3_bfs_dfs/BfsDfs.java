@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
-import java.util.Stack;
 
 class Node {
 	
@@ -31,28 +30,7 @@ class Node {
 	public void setConnected(ArrayList<Integer> connected) {
 		this.connected = connected;
 	}
-	
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + num;
-		return result;
-	}
-	
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Node other = (Node) obj;
-		if (num != other.num)
-			return false;
-		return true;
-	}
+
 	@Override
 	public String toString() {
 		return "Node [num=" + num + ", visited=" + visited + ", connected=" + connected + "]";
@@ -95,10 +73,10 @@ public class BfsDfs {
 			Node n2 = findNode(t2);
 			
 			if(n1 == null) {
-				Node newNode1 = new Node();
-				newNode1.setNum(t1) ;
-				newNode1.getConnected().add(t2);
-				nodes.add(newNode1);
+				Node newNode = new Node();
+				newNode.setNum(t1) ;
+				newNode.getConnected().add(t2);
+				nodes.add(newNode);
 			} else {
 				n1.getConnected().add(t2);
 			}
@@ -113,12 +91,6 @@ public class BfsDfs {
 			}
 		}
 		
-		for(int i = 0; i < nodes.size(); i++) {
-			ArrayList<Integer> tmp = nodes.get(i).getConnected();
-			Collections.sort(tmp);
-			Collections.reverse(tmp);
-			nodes.get(i).setConnected(tmp);
-		}
 //		for(int i = 0; i < nodes.size(); i++) {
 //			System.out.println(nodes.get(i));
 //		}
@@ -126,20 +98,17 @@ public class BfsDfs {
 		start = findNode(V);
 		
 		// 2. DFS
-		dfs();
+		dfs(start);
 		System.out.println();
 		
 		for(int i = 0; i < nodes.size(); i++) {
 			nodes.get(i).setVisited(false);
 		}
-		for(int i = 0; i < nodes.size(); i++) {
-			ArrayList<Integer> tmp = nodes.get(i).getConnected();
-			Collections.sort(tmp);
-			nodes.get(i).setConnected(tmp);
-		}
 		
 		// 3. BFS
 		bfs();
+		
+		sc.close();
 	}
 	
 	public static Node findNode(int n) {
@@ -151,46 +120,50 @@ public class BfsDfs {
 		return null;
 	}
 	
-	public static void dfs() {
-		Stack<Integer> stack = new Stack<Integer>();
+	public static Node getMinNode(ArrayList<Integer> connected) {
+		ArrayList<Integer> tmp = connected;
 		
-		Node now = start;
-		if(now == null) return;
-		System.out.print(now.getNum() + " ");
-		now.setVisited(true);
-		for(int i = 0; i < now.getConnected().size(); i++) {
-			stack.push(now.getConnected().get(i));
+		for(int i = 0; i < connected.size(); i++) {
+			Collections.sort(tmp);
 		}
 		
-		while(!stack.isEmpty()) {
-			now = findNode(stack.pop());
-			if(now.isVisited()) continue;
-			
-			System.out.print(now.getNum() + " ");
-			now.setVisited(true);
-			
-			Node next = new Node();
-			for(int i = 0; i < now.getConnected().size(); i++) {
-				next = findNode(now.getConnected().get(i));
-				if(next.isVisited()) continue;
-				stack.push(next.getNum());
+		Node node = new Node();
+		for(int i = 0; i < tmp.size(); i++) {
+			node = findNode(tmp.get(i));
+			if(!node.isVisited()) {
+				return node;
+			}
+		}
+		return null;
+	}
+	
+	public static void dfs(Node start) {
+		start.setVisited(true);
+		System.out.print(start.getNum() + " ");
+		
+		for(int i = 0; i < start.getConnected().size(); i++) {
+			Node now = getMinNode(start.getConnected());
+			if(now == null) break;
+			if(!now.isVisited()) {
+				dfs(now);
 			}
 		}
 	}
 	
 	public static void bfs() {
-		Queue<Integer> queue = new LinkedList<Integer>();
+		Queue<Node> queue = new LinkedList<Node>();
 		
 		Node now = start;
 		if(now == null) return;
+		
 		System.out.print(now.getNum() + " ");
 		now.setVisited(true);
 		for(int i = 0; i < now.getConnected().size(); i++) {
-			queue.add(now.getConnected().get(i));
+			queue.add(findNode(now.getConnected().get(i)));
 		}
 		
 		while(!queue.isEmpty()) {
-			now = findNode(queue.poll());
+			now = queue.poll();
 			if(now.isVisited()) continue;
 			
 			System.out.print(now.getNum() + " ");
@@ -200,7 +173,7 @@ public class BfsDfs {
 			for(int i = 0; i < now.getConnected().size(); i++) {
 				next = findNode(now.getConnected().get(i));
 				if(next.isVisited()) continue;
-				queue.add(next.getNum());
+				queue.add(next);
 			}
 		}
 	}
