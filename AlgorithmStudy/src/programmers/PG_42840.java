@@ -1,7 +1,7 @@
 /**
  * 
  */
-package week2_search;
+package programmers;
 
 /**
  * <pre>
@@ -11,7 +11,7 @@ package week2_search;
  * @version ver.1.0
  * @since jdk1.8
  */
-public class MockExam {
+public class PG_42840 {
 
 	public static void main(String[] args) {
 		int[] answers = {1,3,2,4,2};

@@ -1,4 +1,4 @@
-package week3_bfs_dfs;
+package acmicpc;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
 
-public class BfsDfs {
+public class Bj_1260 {
 
 	/**
 	 * <pre>

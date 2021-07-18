@@ -1,4 +1,4 @@
-package week1.queue_stack;
+package programmers;
 
 import java.util.Stack;
 
@@ -11,7 +11,7 @@ import java.util.Stack;
  * @since jdk1.8
  */
 
-public class Stock {
+public class PG_42584 {
 
 	public static void main1(String[] args) {
 		int[] sol = {1, 2, 3, 2, 3};

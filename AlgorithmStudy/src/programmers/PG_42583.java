@@ -1,4 +1,4 @@
-package week1.queue_stack;
+package programmers;
 
 import java.util.ArrayList;
 
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 	 * @since jdk1.8
 	 */
 	
-public class Truck {
+public class PG_42583 {
 
 	public static void main(String[] args) {
 		int[] truck_weights = {10, 10, 10, 10, 10, 10, 10, 10, 10, 10};

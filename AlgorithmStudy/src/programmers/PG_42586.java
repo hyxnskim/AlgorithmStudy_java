@@ -1,4 +1,4 @@
-package week1.queue_stack;
+package programmers;
 
 import java.util.ArrayList;
 
@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * @since jdk1.8
  */
 
-public class Dev {
+public class PG_42586 {
 	public static void main2(String[] args) {
 		int[] progresses = {95, 90, 99, 99, 80, 99};
 		int[] speeds = {1, 1, 1, 1, 1, 1};

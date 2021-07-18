@@ -1,10 +1,10 @@
-package week3_bfs_dfs;
+package acmicpc;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
-public class Virus {
+public class Bj_2606 {
 
 	/**
 	 * <pre>

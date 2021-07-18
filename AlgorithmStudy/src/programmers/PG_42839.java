@@ -1,4 +1,4 @@
-package week2_search;
+package programmers;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -12,7 +12,7 @@ import java.util.Comparator;
  * @since jdk1.8
  */
 
-public class FindPrimeNumber {
+public class PG_42839 {
 
 	public static void main(String[] args) {
 		System.out.println(solution("17"));
