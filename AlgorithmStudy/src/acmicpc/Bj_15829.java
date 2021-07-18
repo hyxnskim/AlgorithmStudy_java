@@ -22,8 +22,12 @@ public class Bj_15829 {
 		String str = sc.next();
 		
 		long hash = 0;
+		long mul = 1;
+		
 		for(int i = 0; i < L; i++) {
-			hash += ((int)(str.charAt(i) - 'a') + 1) * Math.pow(r, i);
+			hash += ((str.charAt(i) - 'a' + 1) * mul) % M;
+			mul = (mul * r) % M;
+			
 		}
 		hash %= M;
 		System.out.println(hash);
