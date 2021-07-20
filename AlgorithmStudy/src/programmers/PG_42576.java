@@ -1,6 +1,7 @@
 package programmers;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class PG_42576 {
 	
@@ -17,25 +18,29 @@ public class PG_42576 {
 		String[] participant = {"mislav", "stanko", "mislav", "ana"};
 		String[] completion = {"stanko", "ana", "mislav"};
 		System.out.println(solution(participant, completion));
-
 	}
 	
 	public static String solution(String[] participant, String[] completion) {
         ArrayList<String> par = new ArrayList<String>();
+        ArrayList<String> com = new ArrayList<String>();
         
-        for(int i = 0; i < participant.length; i++) {
+        int i = 0;
+        for( ; i < completion.length; i++) {
         	par.add(participant[i]);
+        	com.add(completion[i]);
+        }
+        par.add(participant[i]);
+        
+        par.sort(null);
+        Collections.sort(par);
+        Collections.sort(com);
+        
+        
+        for(i = 0; i < completion.length; i++) {
+        	String tmp = par.get(i);
+        	if(!tmp.equals(com.get(i))) return tmp;
         }
         
-        for(int i = 0; i < completion.length; i++) {
-        	String tmp = completion[i];
-        	if(par.contains(tmp)) {
-        		par.remove(tmp);
-        	} else {
-        		return tmp;
-        	}
-        }
-        
-        return par.get(0);
+        return par.get(par.size()-1);
     }
 }
