@@ -44,9 +44,8 @@ public class PG_17681 {
 		int[] res = new int[size];
 		int num = a | b;
 		
-		int idx = size -1;
 		for(int i = size - 1; i >= 0; i--) {
-			res[idx--] = num % 2;
+			res[i] = num % 2;
 			num /= 2;
 		}
 		return res;
