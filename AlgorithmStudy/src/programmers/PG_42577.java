@@ -1,8 +1,6 @@
 package programmers;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.Arrays;
 
 public class PG_42577 {
 	
@@ -16,32 +14,21 @@ public class PG_42577 {
 	 */
 
 	public static void main(String[] args) {
-		String[] phone_book = {"97674223", "119","1195524421"};
+		String[] phone_book = {"12","123","1235","567","88"};
 		System.out.println(solution(phone_book));
 	}
 	
 	 public static boolean solution(String[] phone_book) {
         boolean answer = true;
         
-        ArrayList<String> list = new ArrayList<>();
-        for(int i = 0; i < phone_book.length; i++)
-        	list.add(phone_book[i]);
+        Arrays.sort(phone_book);
         
-        Collections.sort(list, new Comparator<String>() {
-			@Override
-			public int compare(String s1, String s2) {
-				if(s1.length() > s2.length()) return 1;
-				else return -1;
-			}
-		});
-        
-        Loop:
-        for(int i = 0; i < list.size(); i++) {
-        	String str = list.get(i);
-        	for(int j = 0; j < i; j++) {
-        		if(str.startsWith(list.get(j))) {
+        loop:
+        for(int i = 0; i < phone_book.length && answer; i++) {
+        	for(int j = i+1 ; j < phone_book.length; j++) {
+        		if(phone_book[j].startsWith(phone_book[i])) {
         			answer = false;
-        			break Loop;
+        			break loop;
         		}
         	}
         }
