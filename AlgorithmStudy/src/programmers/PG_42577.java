@@ -35,16 +35,11 @@ public class PG_42577 {
 			}
 		});
         
-        for(String s : list) {
-        	System.out.println(s);
-        }
-        
         Loop:
-        for(int i = 0; i < phone_book.length; i++) {
-        	for(int j = 0; j < phone_book.length; j++) {
-        		if(i == j) continue;
-        		if(phone_book[i].length() < phone_book[j].length()) break;
-        		if(phone_book[i].startsWith(phone_book[j])) {
+        for(int i = 0; i < list.size(); i++) {
+        	String str = list.get(i);
+        	for(int j = 0; j < i; j++) {
+        		if(str.startsWith(list.get(j))) {
         			answer = false;
         			break Loop;
         		}
