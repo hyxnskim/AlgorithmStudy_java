@@ -1,6 +1,5 @@
 package swea;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class SWEA_1220_Magnetic {
@@ -32,28 +31,6 @@ public class SWEA_1220_Magnetic {
 				for(int j = 0; j < S; j++) 
 					table[i][j] = sc.nextInt();
 			
-			while(true) {
-				
-				int[][] newTable = new int[S][S];
-				
-				for(int i = 0; i < S; i++) {
-					for(int j = 0; j < S; j++) {
-						if(table[j][i] == 1) {
-							if(j+1 == S) newTable[j][i] = 0;
-							else if(j+1 < S && table[j+1][i] == 0 && newTable[j+1][i] == 0) newTable[j+1][i] = 1;
-							else newTable[j][i] = 1;
-						} else if(table[j][i] == 2) {
-							if(j-1 == -1) newTable[j][i] = 0;
-							else if(j-1 >= 0 && table[j-1][i] == 0 && newTable[j-1][i] == 0) newTable[j-1][i] = 2;
-							else newTable[j][i] = 2;
-						}
-					}
-				}
-				
-				if(Arrays.deepEquals(table, newTable)) break;
-				table = newTable;
-			}	// end while
-			
 			int cnt = 0;
 			for(int i = 0; i < S; i++) {
 				for(int j = 0; j < S; j++) {
@@ -61,8 +38,8 @@ public class SWEA_1220_Magnetic {
 					if(tmp != 1) continue;
 					
 					j++;
-					while(j < S && table[j][i] == 1) j++;
-					if(table[j][i] == 2) cnt++;
+					while(j < S && table[j][i] != 2) j++;
+					if(j < S && table[j][i] == 2) cnt++;
 					
 				}
 			}
