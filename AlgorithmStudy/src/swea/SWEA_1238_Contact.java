@@ -1,7 +1,10 @@
 package swea;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
-import java.util.Stack;
+
 
 public class SWEA_1238_Contact {
 	
@@ -15,69 +18,76 @@ public class SWEA_1238_Contact {
 	 * @since jdk1.8
 	 */
 	
-	public static Node[] nodes;
-	public static Stack<Integer> stack;
+	public static boolean[][] map;
+	public static boolean[] isVisited;
+	public static Queue<Node> queue;
+	public static int depth_max;
+	public static ArrayList<Node> list;
+	public static int S = 101;
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		int T = 10;
-
+		
 		for(int t = 0; t < T; t++) {
-			int N = Integer.parseInt(sc.nextLine());
-			nodes = new Node[N + 1];
-			stack = new Stack<>();
+			int len = sc.nextInt();
+			int start = sc.nextInt();
 			
-			for(int i = 1; i <= N; i++) {
-				String str = sc.nextLine();
-				String[] arr = str.split(" ");
+			map = new boolean[S][S];
+			isVisited = new boolean[S];
+			queue = new LinkedList<>();
+			list = new ArrayList<>();
+			depth_max = 0;
+			
+			for(int i = 0; i < len/2; i++) {
+				int from = sc.nextInt();
+				int to = sc.nextInt();
 				
-				int l = 0, r = 0;
-				if(arr.length > 2) l = Integer.parseInt(arr[2] + "");
-				if(arr.length > 3) r = Integer.parseInt(arr[3] + "");
-				
-				nodes[Integer.parseInt(arr[0] + "")] = new Node(arr[1], l, r);
+				map[from][to] = true;
 			}
 			
-			postorder_traverse(1);
-			System.out.printf("#%d %d\n", t+1, stack.pop());
+			Node now = new Node(start, 1);
+			bfs(now);
+			
+			int max = -1;
+			for(Node n : list) {
+				if(n.depth == depth_max && n.n > max) {
+					max = n.n;
+				}
+			}
+			
+			System.out.printf("#%d %d\n", t+1, max);
 		}
 		sc.close();
 	}
 	
-	public static void postorder_traverse(int now) {
-		if(nodes[now] == null) return;
-		postorder_traverse(nodes[now].left);
-		postorder_traverse(nodes[now].right);
-		process_node(nodes[now].c);
-	}
-	
-	public static void process_node(String str) {
-		int a = 0, b = 0;
-		if(str.equals("+")) {
-			stack.add(stack.pop() + stack.pop());
-		} else if(str.equals("-")) {
-			a = stack.pop();
-			b = stack.pop();
-			stack.add(b - a);
-		} else if(str.equals("*")) {
-			stack.add(stack.pop() * stack.pop());
-		} else if(str.equals("/")) {
-			a = stack.pop();
-			b = stack.pop();
-			stack.add(b / a);
-		} else {
-			stack.add(Integer.parseInt(str));
+	public static void bfs(Node now) {
+		queue.add(now);
+		isVisited[now.n] = true;
+		
+		while(!queue.isEmpty()) {
+			Node tmp = queue.poll();
+			for(int i = 0; i < S; i++) {
+				if(map[tmp.n][i] && !isVisited[i]) {
+					int d = tmp.depth + 1;
+					if(d > depth_max) depth_max = d;
+					
+					Node node = new Node(i, d);
+					queue.add(node);
+					list.add(node);
+					isVisited[i] = true;
+				}
+			}
 		}
 	}
 }
 
-class Node {
-	String c;
-	int left, right;
+class Node{
+	int n;
+	int depth;
 	
-	Node(String c, int left, int right){
-		this.c = c;
-		this.left = left;
-		this.right = right;
+	Node(int n, int depth){
+		this.n = n;
+		this.depth = depth;
 	}
 }
