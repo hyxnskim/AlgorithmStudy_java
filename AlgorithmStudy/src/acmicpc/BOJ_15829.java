@@ -2,7 +2,7 @@ package acmicpc;
 
 import java.util.Scanner;
 
-public class Bj_15829 {
+public class BOJ_15829 {
 	
 	/**
 	 * <pre>

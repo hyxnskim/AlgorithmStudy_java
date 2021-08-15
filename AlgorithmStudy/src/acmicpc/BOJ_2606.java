@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
-public class Bj_2606 {
+public class BOJ_2606 {
 
 	/**
 	 * <pre>

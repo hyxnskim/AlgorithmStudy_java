@@ -11,7 +11,7 @@ import java.util.Scanner;
  * @since jdk1.8
  */
 
-public class Bj_10816 {
+public class BOJ_10816 {
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
