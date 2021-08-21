@@ -19,15 +19,7 @@ public class BOJ_2869 {
 		int B = sc.nextInt();
 		int V = sc.nextInt();
 		
-		int n = A - B;
-		int cnt = 0;
-		int i = 1;
-		for(; i < V; i++) {
-			cnt += n;
-			if(cnt >= V - B) break;
-		}
-		
-		System.out.println(i);
+		System.out.println((int)Math.ceil((double)(V - B) / (A - B)));
 		
 		sc.close();
 	}
