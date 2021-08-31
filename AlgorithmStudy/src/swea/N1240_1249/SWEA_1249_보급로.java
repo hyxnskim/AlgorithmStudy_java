@@ -10,12 +10,15 @@ package swea.N1240_1249;
  * @since jdk1.8
  */
 
-
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
 
 public class SWEA_1249_보급로 {
 	static int N;
 	static int[][] mat;
+	static int[][] ans;
 	static boolean[][] isVisited;
 	static int res;
 	static int[] dx = {-1, 1, 0, 0};
@@ -23,12 +26,12 @@ public class SWEA_1249_보급로 {
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-		
 		int T = sc.nextInt();
 		
 		for(int t = 0; t < T; t++) {
 			N = sc.nextInt();
 			mat = new int[N][N];
+			ans = new int[N][N];
 			isVisited = new boolean[N][N];
 			
 			for(int i = 0; i < N; i++) {
@@ -38,9 +41,14 @@ public class SWEA_1249_보급로 {
 				}
 			}
 			
-			res = 0;
+			for(int i = 0; i < N; i++) {
+				Arrays.fill(ans[i], Integer.MAX_VALUE);
+			}
+			ans[0][0] = 0;
+			
+			res = Integer.MAX_VALUE;
 			isVisited[0][0] = true;
-			dfs(0, 0, 0, isVisited);
+			bfs(0, 0);
 			
 			System.out.printf("#%d %d\n", t+1, res);
 		}
@@ -51,37 +59,41 @@ public class SWEA_1249_보급로 {
 		return (x < 0 || x >= N || y < 0 || y >= N);
 	}
 	
-	public static void dfs(int x, int y, int distance, boolean[][] isVisited) {
+	public static void bfs(int x, int y) {
+		Queue<Position> queue = new LinkedList<>();
 		
-		//System.out.println("x = " + x + " y = " + y);
+		queue.offer(new Position(x, y));
+		isVisited[x][y] = true;
 		
-		distance += mat[x][y];
-		if(res != 0 && distance > res) return;
-		
-		int xx , yy;
-		for(int i = 0; i < 4; i++) {
-			xx = x + dx[i]; yy = y + dy[i];
-			if(!isWall(xx, yy) && !isVisited[xx][yy]) {
-				boolean[][] newVisited = copy(isVisited);
-				newVisited[xx][yy] = true;
-				dfs(xx, yy, distance, newVisited);
+		while(!queue.isEmpty()) {
+			Position pos = queue.poll();
+			int nowx = pos.x;
+			int nowy = pos.y;
+			
+			if(nowx == N-1 && nowy == N-1) {
+				if(res > ans[N-1][N-1]) res = ans[N-1][N-1];
 			}
-			if(xx == N-1 && yy == N-1) {
-				//System.out.println(distance);
-				if(res == 0 || res > distance) res = distance;
-				return;
-			}
-		}
-		
-	}
-	
-	public static boolean[][] copy(boolean[][] isVisited){
-		boolean[][] list = new boolean[N][N];
-		for(int i = 0; i < N; i++) {
-			for(int j = 0; j < N; j++) {
-				list[i][j] = isVisited[i][j];
+			if(ans[nowx][nowy] > res) continue;
+			
+			int xx, yy;
+			for(int i = 0; i < 4; i++) {
+				xx = nowx + dx[i]; yy = nowy + dy[i];
+									// 아직 방문전인 노드이거나         이미 다른 경로로 방문했지만, 현 경로보다 복구시간이 긴 경로일 경우
+				if(!isWall(xx, yy) && (!isVisited[xx][yy] || ans[xx][yy] > ans[nowx][nowy] + mat[xx][yy])) {
+					isVisited[xx][yy] = true;
+					ans[xx][yy] = ans[nowx][nowy] + mat[xx][yy];
+					queue.offer(new Position(xx, yy));
+				}
 			}
 		}
-		return list;
 	}
 }
+
+class Position{
+	int x, y;
+	Position(int x, int y){
+		this.x = x;
+		this.y = y;
+	}
+}
+
