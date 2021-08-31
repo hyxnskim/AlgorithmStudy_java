@@ -58,6 +58,7 @@ public class SWEA_1247_최적경로 {
 		boolean flag = false;
 		boolean[] newVisited;
 		distance += calDistance(before, cur);
+		if(res != 0 && distance > res) return;
 		
 		for(int i = 0; i < N; i++) {
 			if(!isVisited[i]) {
