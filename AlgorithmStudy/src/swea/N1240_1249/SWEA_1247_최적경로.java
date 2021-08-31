@@ -17,7 +17,7 @@ public class SWEA_1247_최적경로 {
 	static int N;
 	static int[][] loc;
 	static int[] work, home;
-	static int distance, fDistance;
+	static int res;
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
@@ -42,39 +42,48 @@ public class SWEA_1247_최적경로 {
 				loc[i][1] = sc.nextInt();
 			}
 			
-			distance = 0;
+			res = 0;
 			for(int i = 0; i < N; i++) {
 				boolean[] isVisited = new boolean[N];
 				isVisited[i] = true;
 				trace(work, loc[i], isVisited, 0);
-				System.out.println(fDistance);
-				if(distance == 0 || distance > fDistance) distance = fDistance;
 			}
 			
-			System.out.printf("#%d %d\n", t+1, distance);
+			System.out.printf("#%d %d\n", t+1, res);
 		}
 		sc.close();
 	}
 	
 	public static void trace(int[] before, int[] cur, boolean[] isVisited, int distance) {
 		boolean flag = false;
-		
+		boolean[] newVisited;
 		distance += calDistance(before, cur);
 		
 		for(int i = 0; i < N; i++) {
 			if(!isVisited[i]) {
-				isVisited[i] = true;
+				newVisited = copy(isVisited);
+				newVisited[i] = true;
 				flag = true;
-				trace(cur, loc[i], isVisited, distance);
+				trace(cur, loc[i], newVisited, distance);
 			}
 		}
 		if(!flag) {
-			fDistance = distance + calDistance(cur, home);
+			int tmp = distance + calDistance(cur, home);
+			if(res == 0 || res > tmp) res = tmp;
 		}
 		
 	}
 	
 	public static int calDistance(int[] a, int[] b) {
 		return Math.abs(a[0] - b[0]) + Math.abs(a[1] - b[1]);
+	}
+	
+	public static boolean[] copy(boolean[] arr) {
+		boolean[] newArr = new boolean[N];
+		
+		for(int i = 0; i < N; i++) {
+			newArr[i] = arr[i];
+		}
+		return newArr;
 	}
 }
