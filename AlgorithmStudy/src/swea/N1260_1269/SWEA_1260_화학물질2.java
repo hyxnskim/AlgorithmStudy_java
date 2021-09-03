@@ -17,6 +17,8 @@ public class SWEA_1260_화학물질2 {
 
 	static int N;
 	static int[][] mat;
+	static int[][] dp;
+	static ArrayList<Area> list;
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
@@ -32,17 +34,12 @@ public class SWEA_1260_화학물질2 {
 				}
 			}
 			
-			ArrayList<Area> list = new ArrayList<Area>();
+			list = new ArrayList<Area>();
 			for(int i = 0; i < N; i++) {
 				for(int j = 0; j < N; j++) {
 					if(mat[i][j] > 0) list.add(solution(i, j));
 				}
 			}
-			
-//			System.out.println();
-//			for(int i = 0; i < list.size(); i++) {
-//				System.out.println(list.get(i).height + " " + list.get(i).width);
-//			}
 			
 			// 맨 앞 찾기
 			Area start = null;
@@ -63,13 +60,10 @@ public class SWEA_1260_화학물질2 {
 			ArrayList<Area> newList = new ArrayList<Area>();
 			newList.add(start);
 			// 연결
-//			System.out.println();
-//			System.out.printf("%d %d ", start.height, start.width);
 			while(!list.isEmpty()) {
 				for(int i = 0; i < list.size(); i++) {
 					Area now = list.get(i);
 					if(now.height == start.width) {
-//						System.out.print(now.height + " " + now.width + " ");
 						newList.add(now);
 						start = now;
 						list.remove(i);
@@ -77,27 +71,16 @@ public class SWEA_1260_화학물질2 {
 				}
 			}
 			list = newList;
-//			System.out.println();
 			
-			int cnt = 0;
-			while(list.size() > 1) {
-				int min = 0;
-				for(int i = 0; i < list.size() - 1; i++) {
-					if(list.get(i).height < list.get(min).height) {
-						min = i;
-					}
+			int size = list.size();
+			dp = new int[size][size];
+			for(int i = 0; i < size; i++) {
+				for(int j = 0; j < size; j++) {
+					dp[i][j] = -1;
 				}
-				
-				Area a1 = list.get(min);
-				Area a2 = list.get(min + 1);
-				
-				cnt += a1.height * a1.width * a2.width;
-				
-				Area newArea = new Area(a1.height, a2.width);
-				list.remove(min + 1);
-				list.set(min, newArea);
 			}
-			
+			int cnt = cal(0, size-1);
+
 			System.out.printf("#%d %d\n", t+1, cnt);
 
 		}
@@ -147,6 +130,22 @@ public class SWEA_1260_화학물질2 {
 		}
 		
 		return new Area(height, width);
+	}
+	
+	public static int cal(int left, int right) {
+		if(left == right) return 0;
+		if(dp[left][right] != -1) return dp[left][right];
+		
+		int min = Integer.MAX_VALUE;
+		for(int i = left; i < right; i++) {
+			int calLeft = cal(left, i);
+			int calRight = cal(i+1, right);
+			
+			int num = list.get(left).height * list.get(i).width * list.get(right).width;
+			min = Math.min(calLeft + calRight + num, min);
+		}
+		
+		return dp[left][right] = min;
 	}
 }
 
