@@ -15,13 +15,12 @@ public class BOJ_11653 {
 		Scanner sc = new Scanner(System.in);
 		
 		int N = sc.nextInt();
-		int idx = N;
 		
 		if(isPrime(N)) System.out.println(N);
 		else if(N == 1);
 		else {
 			
-			for(int i = 2; i <= idx/2; i++) {
+			for(int i = 2; i <= N; i++) {
 				if(!isPrime(i) || N%i != 0) continue;
 				
 				while(N >= i && N%i == 0) {
