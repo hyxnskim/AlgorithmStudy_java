@@ -46,7 +46,11 @@ public class SWEA_1865_동철이의일분배 {
 		} else {
 			for(int i = k; i < N; i++) {
 				swap_perm(k, i);
-				solve(k+1);
+				double val = 1;
+				for(int j = 0; j <= k ; j++) {
+					val *= mat[j][perm[j]];
+				}
+				if(val > ans) solve(k+1);
 				swap_perm(i, k);
 			}
 		}
