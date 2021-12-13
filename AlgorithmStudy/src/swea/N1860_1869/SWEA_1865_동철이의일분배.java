@@ -27,30 +27,22 @@ public class SWEA_1865_동철이의일분배 {
 			 perm = new int[N];
 			 for(int i = 0; i < N; i++) perm[i] = i;
 			 
-			 solve(0);
+			 solve(0, 1);
 			 System.out.printf("#%d %f\n", t+1, ans * 100);
 		}
-		
 		
 		sc.close();
 	}
 	
-	static void solve(int k) {
-		if(k == N-1) {
-			double val = 1;
-			for(int i = 0; i < N; i++) {
-				val *= mat[i][perm[i]];
-			}
-			System.out.println(val);
+	static void solve(int k, double val) {
+		if(k == N) {
 			if(val > ans) ans = val;
 		} else {
 			for(int i = k; i < N; i++) {
 				swap_perm(k, i);
-				double val = 1;
-				for(int j = 0; j <= k ; j++) {
-					val *= mat[j][perm[j]];
-				}
-				if(val > ans) solve(k+1);
+				
+				if((val * mat[k][perm[k]]) > ans) 
+					solve(k+1, (val * mat[k][perm[k]]));
 				swap_perm(i, k);
 			}
 		}
