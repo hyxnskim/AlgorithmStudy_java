@@ -33,6 +33,7 @@ public class BOJ_1002 {
 				if(arr[2] + dis == arr[5] || arr[5] + dis == arr[2]) res = 1;	// 내접
 				else if(arr[2] + arr[5] == dis) res = 1;	// 외접
 				else if(arr[2] + arr[5] < dis) res = 0;		// 만나지 못하는 경우
+				else if((arr[2]*2 < arr[5] && dis < arr[5]) || (arr[5]*2 < arr[2] && dis < arr[2])) res = 0;
 				else res = 2;
 			}
 			
@@ -46,3 +47,4 @@ public class BOJ_1002 {
 		return (int) Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
 	}
 }
+
