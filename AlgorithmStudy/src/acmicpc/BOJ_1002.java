@@ -29,11 +29,11 @@ public class BOJ_1002 {
 				if(arr[2] == arr[5]) res = -1;	// 동일한 원일때
 				else res = 0;	// 두 원의 중심이 같지만 반지름이 다르면 교점이 없음
 			} else {
-				int dis = findDistance(arr[0], arr[1], arr[3], arr[4]);
-				if(arr[2] + dis == arr[5] || arr[5] + dis == arr[2]) res = 1;	// 내접
-				else if(arr[2] + arr[5] == dis) res = 1;	// 외접
-				else if(arr[2] + arr[5] < dis) res = 0;		// 만나지 못하는 경우
-				else if((arr[2]*2 < arr[5] && dis < arr[5]) || (arr[5]*2 < arr[2] && dis < arr[2])) res = 0;
+				double dis = findDistance(arr[0], arr[1], arr[3], arr[4]);
+				if(Math.pow(arr[2] - arr[5], 2) == dis) res = 1;	// 내접
+				else if(Math.pow(arr[2] + arr[5], 2) == dis) res = 1;	// 외접
+				else if(Math.pow(arr[2] + arr[5], 2) < dis) res = 0;	// 만나지 못하는 경우
+				else if(Math.pow(arr[2] - arr[5], 2) > dis) res = 0;
 				else res = 2;
 			}
 			
@@ -44,7 +44,6 @@ public class BOJ_1002 {
 	}
 	
 	static int findDistance(int x1, int y1, int x2, int y2) {
-		return (int) Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+		return (int)(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
 	}
 }
-
