@@ -26,11 +26,9 @@ public class BOJ_9020 {
 	}
 	
 	static void solution() {
-		int n = N / 2;
-		int i = n;
+		int i = N / 2;
 		for(; i > 2; i++) {
-			if(!isPrime(i) || !isPrime(N-i)) continue;
-			else break;
+			if(isPrime(i) && isPrime(N-i)) break;
 		}
 		
 		if(i > N-i) System.out.printf("%d %d\n", N-i, i);
