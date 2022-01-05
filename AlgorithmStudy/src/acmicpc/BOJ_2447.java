@@ -21,14 +21,15 @@ public class BOJ_2447 {
 		mat = new boolean[N][N];
 		star(0, 0, N);
 		
+		StringBuffer sb = new StringBuffer();
 		for(int i = 0; i < N; i++) {
 			for(int j = 0; j < N; j++) {
-				if(mat[i][j]) System.out.print("*");
-				else System.out.print(" ");
+				if(mat[i][j]) sb.append("*");
+				else sb.append(" ");
 			}
-			System.out.println();
+			sb.append("\n");
 		}
-		
+		System.out.println(sb);
 		
 		sc.close();
 	}
@@ -42,7 +43,7 @@ public class BOJ_2447 {
 		
 		for(int i = x; i < x+n; i++) {
 			for(int j = y; j < y+n; j++) {
-				if(mat[i][j]) continue;
+//				if(mat[i][j]) continue;
 				if(i >= x+n/3 && i < limit && j == y + n/3) {
 					j += n/3;
 				}
