@@ -38,12 +38,10 @@ public class BOJ_2447 {
 		if(n < 3) return;
 		if(n == 3) draw(x, y);
 		
-		int limit = (x+n/3)*2;
-		if(limit > N) limit = N-n/3;
+		int limit = (n/3)*2+x;
 		
 		for(int i = x; i < x+n; i++) {
 			for(int j = y; j < y+n; j++) {
-//				if(mat[i][j]) continue;
 				if(i >= x+n/3 && i < limit && j == y + n/3) {
 					j += n/3;
 				}
@@ -53,16 +51,12 @@ public class BOJ_2447 {
 	}
 	
 	static void draw(int x, int y) {
-		for(int i = x; i < x+3; i++) {
-			if(i == x || i == x+2) {
-				for(int j = y; j < y+3; j++) {
-					mat[i][j] = true;
-				}
-			} else {
-				mat[i][y] = true;
-				mat[i][y+2] = true;
-			}
+		for(int i = 0; i < 3; i++) {
+			mat[x][y+i] = true;
+			mat[x+2][y+i] = true;
 		}
+		
+		mat[x+1][y] = true;
+		mat[x+1][y+2] = true;
 	} // end of draw
-
 }
