@@ -27,6 +27,7 @@ public class SWEA_1865_동철이의일분배 {
 			 perm = new int[N];
 			 for(int i = 0; i < N; i++) perm[i] = i;
 			 
+			 grid_ans();
 			 solve(0, 1);
 			 System.out.printf("#%d %f\n", t+1, ans * 100);
 		}
@@ -48,10 +49,26 @@ public class SWEA_1865_동철이의일분배 {
 		}
 	}
 	
+	static void grid_ans() {
+		int val = 1;
+		int[] chk = new int[N];
+		
+		for(int j = 0; j < N; j++) {
+			int tmaxi = 0;
+			for(int i = 0; i < N; i++) {
+				if(!(chk[i] < mat[i][j] && tmaxi < mat[i][j])) {
+					tmaxi = i;
+				}
+				chk[tmaxi] = 1;
+				val *= mat[tmaxi][j];
+			}
+			ans = val;
+		}
+	}
+	
 	static void swap_perm(int x, int y) {
 		int tmp = perm[x];
 		perm[x] = perm[y];
 		perm[y] = tmp;
 	}
-
 }
