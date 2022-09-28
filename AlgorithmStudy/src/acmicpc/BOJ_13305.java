@@ -23,19 +23,13 @@ public class BOJ_13305 {
 		st = new StringTokenizer(br.readLine());
 		for(int i = 0; i < N; i++) price[i] = Integer.parseInt(st.nextToken());
 		
+		for(int i = 1; i < N; i++) {
+			if(price[i-1] < price[i]) price[i] = price[i-1];
+		}
+		
 		int res = 0;
 		for(int i = 0; i < N-1; i++) {
-			if(price[i] > price[i+1]) res += dis[i] * price[i];
-			else {
-				int tmp = dis[i];
-				int j = i+1;
-				for(; j < N-1; j++) {
-					if(price[j] >= price[i]) tmp += dis[j];
-					else break;
-					}
-				res += tmp * price[i];
-				i = j;
-			}
+			res += dis[i] * price[i];
 		}
 				
 		bw.write(String.valueOf(res));
