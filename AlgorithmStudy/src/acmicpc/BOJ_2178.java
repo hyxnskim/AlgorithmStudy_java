@@ -3,7 +3,8 @@ package acmicpc;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
-import java.util.Arrays;
+import java.util.Queue;
+import java.util.LinkedList;
 
 public class BOJ_2178 {
 	
@@ -34,9 +35,9 @@ public class BOJ_2178 {
 		}
 		
 		isVisited[0][0] = true;
-		search(0, 0, 1);
+		search(0, 0);
 		
-		System.out.println(min);
+		System.out.println(mat[N-1][M-1]);
 		
 	}
 	
@@ -44,23 +45,25 @@ public class BOJ_2178 {
 		return (x < 0 || x >= N || y < 0 || y >= M);
 	}
 	
-	public static void search(int x, int y, int cnt) {
-		if(x == N-1 && y == M-1) {
-			if(cnt < min) min = cnt;
-			return;
-		}
-		if(cnt > min) return;
+	public static void search(int x, int y) {
+		Queue<int[]> queue = new LinkedList<>();
+		queue.add(new int[] {x, y});
 		
-		for(int i = 0; i < 4; i++) {
-			int xx = x + dx[i];
-			int yy = y + dy[i];
+		while(!queue.isEmpty()) {
+			int[] cur = queue.poll();
 			
-			if(!isWall(xx, yy) && !isVisited[xx][yy] && mat[xx][yy] == 1) {
-				isVisited[xx][yy] = true;
-				search(xx, yy, cnt+1);
-				isVisited[xx][yy] = false;
+			for(int i = 0; i < 4; i++) {
+				int xx = cur[0] + dx[i];
+				int yy = cur[1] + dy[i];
+				
+				if(!isWall(xx, yy) && !isVisited[xx][yy] && mat[xx][yy] > 0) {
+					queue.add(new int[] {xx, yy});
+					mat[xx][yy] = mat[cur[0]][cur[1]] + 1;
+					isVisited[xx][yy] = true;
+				}
 			}
-		}
+			
+		}		
 	}
 
 }
