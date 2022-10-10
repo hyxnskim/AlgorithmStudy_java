@@ -2,19 +2,16 @@ package codetree;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 public class Samsung_2017_sf_am_1 {
 	
+	static final int MAX_N = 20;
+	
 	static int n;
 	static int[][] mat;
 	static int min = Integer.MAX_VALUE;
-	static int[] arr;
-	static int[] work_arr;
-	static boolean[] isVisited, isVisited_work;
-	static int sum_morning, sum_night;
-	static ArrayList<Integer> list_night;
+	static boolean[] evening = new boolean[MAX_N];
 	
 	public static void main(String[] args) throws Exception {
 		
@@ -24,9 +21,6 @@ public class Samsung_2017_sf_am_1 {
 		n = Integer.parseInt(br.readLine());
 		
 		mat = new int[n][n];
-		arr = new int[n/2];
-		work_arr = new int[2];
-		isVisited = new boolean[n];
 		
 		for(int i = 0; i < n; i++) {
 			st = new StringTokenizer(br.readLine());
@@ -35,75 +29,43 @@ public class Samsung_2017_sf_am_1 {
 			}
 		}
 		
-		dfs(0);
+		dfs(0, 0);
 		System.out.println(min);
 	}
 	
 	public static void solution() {
-		list_night = new ArrayList<>();
-		for(int i = 0; i < n; i++) list_night.add(i);
-		for(int i : arr) list_night.remove(list_night.indexOf(i));
 		
-		sum_morning = 0;
-		sum_night = 0;
+		int morning = 0, night = 0;
+		for(int i = 0; i < n; i++) {
+			for(int j = 0; j < n; j++) {
+				if(!evening[i] && !evening[j]) morning += mat[i][j];
+				else if(evening[i] && evening[j]) night += mat[i][j];
+			}
+		}
 		
-		isVisited_work = new boolean[n/2];
-		work_dfs(0, true);
-		
-		isVisited_work = new boolean[n/2];
-		work_dfs(0, false);
-		
-		int tmp = Math.abs(sum_morning - sum_night);
+		int tmp = Math.abs(morning - night);
 		if(tmp < min) min = tmp;
-		
 	}
 	
-	public static void work_dfs(int depth, boolean isNight) {
-		if(depth >= 2) {
-			int tmp = mat[work_arr[0]][work_arr[1]];
-			if(isNight) sum_night += tmp;
-			else sum_morning += tmp;
-			return;
-		}
-		
-		if(isNight) {
-			
-			for(int i = 0; i < list_night.size(); i++) {
-				if(!isVisited_work[i]) {
-					isVisited_work[i] = true;
-					work_arr[depth] = list_night.get(i);
-					work_dfs(depth+1, isNight);
-					isVisited_work[i] = false;
-				}
-			}
-		} else {
-			for(int i = 0; i < arr.length; i++) {
-				if(!isVisited_work[i]) {
-					isVisited_work[i] = true;
-					work_arr[depth] = arr[i];
-					work_dfs(depth+1, isNight);
-					isVisited_work[i] = false;
-				}
-			}
-		}
-		
-	}
-	
-	public static void dfs(int depth) {
+	public static void dfs(int idx, int depth) {
 		
 		if(depth >= n/2) {
 			solution();
 			return;
 		}
 		
-		for(int i = 0; i < n; i++) {
-			if(!isVisited[i]) {
-				isVisited[i] = true;
-				arr[depth] = i;
-				dfs(depth+1);
-				isVisited[i] = false;			
-			}
+		if(idx == n) {
+			return;
 		}
+		
+		// 아침에 일
+		dfs(idx+1, depth);
+		
+		// 저녁에 일
+		evening[idx] = true;
+		dfs(idx+1, depth+1);
+		evening[idx] = false;
+		
 		return;
 	}
 
