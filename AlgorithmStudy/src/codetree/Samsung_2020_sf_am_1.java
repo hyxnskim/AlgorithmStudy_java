@@ -29,6 +29,7 @@ public class Samsung_2020_sf_am_1 {
 			rail[i] = Integer.parseInt(st.nextToken());
 		}
 		
+		Loop:
 		while(cnt < k) {
 			ans++;
 			
@@ -40,22 +41,27 @@ public class Samsung_2020_sf_am_1 {
 			
 			// 2. 사람 이동
 			if(front > back) {
-				for(int i = front; i <= n*2; i++) {
+				for(int i = n*2; i >= front; i--) {
 					if(occupied[i]) move(i);
+					if(cnt >= k) break Loop;
 				}
-				for(int i = 1; i <= back; i++) {
+				for(int i = back; i >= 1; i--) {
 					if(occupied[i]) move(i);
+					if(cnt >= k) break Loop;
 				}
 			} else {
-				for(int i = front; i <= back; i++) {
+				for(int i = back; i >= front; i--) {
 					if(occupied[i]) move(i);
+					if(cnt >= k) break Loop;
 				}
 			}
 			
 			// 3. 1번 칸에 사람이 없고 안정성이 0이 아니라면 사람 한 명 더 올리기
 			if(!occupied[front] && rail[front] > 0) {
 				occupied[front] = true;
-				if(--rail[front] == 0) cnt++;
+				if(--rail[front] == 0) {
+					if(++cnt >= k) break Loop;
+				}
 			}
 			
 //			for(int i = 1; i <= n*2; i++) System.out.print(rail[i] + " ");
