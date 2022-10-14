@@ -51,38 +51,38 @@ public class Samsung_2022_ws_pm_2 {
 		
 		// 나무 성장
 		grow();
-// 		System.out.println("==========GROW==========");
-// 		for(int i = 0; i < n; i++) {
-// 			for(int j = 0; j < n; j++) {
-// 				System.out.print(mat[i][j] + " ");
-// 			}
-// 			System.out.println();
-// 		}
+//		System.out.println("==========GROW==========");
+//		for(int i = 0; i < n; i++) {
+//			for(int j = 0; j < n; j++) {
+//				System.out.print(mat[i][j] + " ");
+//			}
+//			System.out.println();
+//		}
 		
 		// 나무 번식
 		reproduce();
-// 		System.out.println("========REPRODUCE========");
-// 		for(int i = 0; i < n; i++) {
-// 			for(int j = 0; j < n; j++) {
-// 				System.out.print(mat[i][j] + " ");
-// 			}
-// 			System.out.println();
-// 		}
+//		System.out.println("========REPRODUCE========");
+//		for(int i = 0; i < n; i++) {
+//			for(int j = 0; j < n; j++) {
+//				System.out.print(mat[i][j] + " ");
+//			}
+//			System.out.println();
+//		}
 		
 		// 제초제 뿌릴 위치 찾기
 		findPos();
-// 		System.out.println("========FINDPOS========");
-// 		System.out.printf("KILLPOS = (%d, %d)\n", killPos[0], killPos[1]);
+//		System.out.println("========FINDPOS========");
+//		System.out.printf("KILLPOS = (%d, %d)\n", killPos[0], killPos[1]);
 		
 		// 제초제 뿌리기
 		kill();
-// 		System.out.println("==========KILL==========");
-// 		for(int i = 0; i < n; i++) {
-// 			for(int j = 0; j < n; j++) {
-// 				System.out.print(mat[i][j] + " ");
-// 			}
-// 			System.out.println();
-// 		}
+//		System.out.println("==========KILL==========");
+//		for(int i = 0; i < n; i++) {
+//			for(int j = 0; j < n; j++) {
+//				System.out.print(mat[i][j] + " ");
+//			}
+//			System.out.println();
+//		}
 	}
 	
 	public static void kill() {
@@ -131,8 +131,8 @@ public class Samsung_2022_ws_pm_2 {
 							int y = j + dyc[t1]*t2;
 							
 							if(!isWall(x, y)) {
-								if(mat[i][j] <= 0) break Loop;
-								_cnt += mat[i][j];
+								if(mat[x][y] <= 0) break Loop;
+								_cnt += mat[x][y];
 							}
 						}
 					}
