@@ -86,6 +86,7 @@ public class Samsung_2022_ws_pm_2 {
 	}
 	
 	public static void kill() {
+		if(killPos[0] == -1 && killPos[1] == -1) return;
 		
 		cnt += mat[killPos[0]][killPos[1]];
 		mat[killPos[0]][killPos[1]] = -2 * (c+1);
@@ -115,6 +116,7 @@ public class Samsung_2022_ws_pm_2 {
 	}
 	
 	public static void findPos() {
+		killPos[0] = -1; killPos[1] = -1;
 		int max = 0;
 
 		for(int i = 0; i < n; i++) {
