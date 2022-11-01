@@ -27,10 +27,12 @@ public class BOJ_1463 {
 	public static int sol(int N) {
 		
 		if(dp[N] == null) {
-			if(N%6 == 0) dp[N] = Math.min(sol(N/3), Math.min(sol(N/2), sol(N-1))) + 1;
-			else if(N%3 == 0) dp[N] = Math.min(sol(N/3), sol(N-1)) + 1;
-			else if(N%2 == 0) dp[N] = Math.min(sol(N/2), sol(N-1)) + 1;
-			else dp[N] = sol(N-1) + 1;
+			int A = Integer.MAX_VALUE, B = Integer.MAX_VALUE, C = Integer.MAX_VALUE;
+			if(N%3 == 0) A = sol(N/3);
+			if(N%2 == 0) B = sol(N/2);
+			C = sol(N-1);
+			
+			dp[N] = Math.min(A, Math.min(B, C)) + 1;
 		}
 		
 		return dp[N];
